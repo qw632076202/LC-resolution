@@ -1,0 +1,49 @@
+<script>
+let candidates = [10,1,2,7,6,1,5]
+let target = 8
+
+// 通过，效率低
+var combinationSum = function(candidates, target) {
+  for(let i = 0; i< candidates.length; i++) {
+    for(let j = i+1; j <candidates.length; j++) {
+      if(candidates[i]> candidates[j]) {
+        [candidates[i], candidates[j]] = [candidates[j], candidates[i]]
+      }
+    }
+  }
+  let ans = []
+
+  var dfs = function(subans, sum, idx) {
+    if(sum === target) {
+      let has = false
+      for(let el of ans) {
+        if(el.toString() == subans.toString()) {
+          has = true
+        }
+      }
+      if(!has) {
+        ans.push(subans)
+      }
+      return
+    }
+    if((sum+ (candidates.length-idx+1)*candidates[candidates.length-1]) < target) {
+      return
+    }
+    if(sum > target) {
+      return
+    }
+    if(idx > candidates.length-1) {
+      return
+    }
+    dfs(subans, sum, idx+1)
+    dfs([...subans, candidates[idx]], sum+candidates[idx], idx+1)
+  }
+
+  dfs([], 0, 0)
+  return ans
+};
+
+let ans = combinationSum(candidates, target)
+
+console.log(ans)
+</script>

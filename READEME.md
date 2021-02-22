@@ -1,0 +1,1 @@
+# lc resolution in javascript
